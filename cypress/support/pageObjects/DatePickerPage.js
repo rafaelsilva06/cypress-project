@@ -1,7 +1,13 @@
 class datePickerPage{
 
-    getDatePicker(){
+    getDatePickerVehicleData(){
         return cy.get('button#opendateofmanufacturecalender')
+
+    }
+
+    getDatePickerInsurantData(){
+        return cy.get('button#opendateofbirthcalender')
+
     }
 
     getCalendar(){

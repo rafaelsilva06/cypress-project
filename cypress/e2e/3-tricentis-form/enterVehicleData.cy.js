@@ -6,10 +6,9 @@ describe('tricentis', () => {
 
     var datePickerPage = new DatePickerPage();
 
-    beforeEach(() => {
-        cy.visit('http://sampleapp.tricentis.com/101/app.php')
-    })
     it('aba Enter Vehicle Data', () => {
+        cy.visit('http://sampleapp.tricentis.com/101/app.php')
+
         // Selecionando e validando dropdown
         cy.get('[id=make]').select('Audi')
         cy.get('[id=make]').should('have.value', 'Audi')
@@ -24,7 +23,7 @@ describe('tricentis', () => {
         cy.get('[id=engineperformance]').should('have.value', '140')
 
         // Selecionando uma data
-        datePickerPage.getDatePicker().click()
+        datePickerPage.getDatePickerVehicleData().click()
         datePickerPage.getCalendar().should('be.visible')
         cy.selectYear(2022)
         cy.selectMonth('January')
@@ -61,6 +60,55 @@ describe('tricentis', () => {
         cy.get('button#nextenterinsurantdata').click();
         // Validando se foi para o próximo formulário
         cy.get('li.idealsteps-step-active a').should('have.id', 'enterinsurantdata')
+
+    });
+
+    it('aba Enter Insurant Data', () => {
+
+        // Incluindo e validando nome e sobrenome
+        cy.get('[id=firstname]').type('Rafael')
+        cy.get('[id=firstname]').should('have.value', 'Rafael')
+        cy.get('[id=lastname]').type('Silva')
+        cy.get('[id=lastname]').should('have.value', 'Silva')
+
+        // Incluindo data de aniversário
+        cy.get('[id=birthdate]').type('11/24/1994')
+        cy.get('[id=birthdate]').should('have.value', '11/24/1994')
+
+        // Selecionando e validando checkbox
+        cy.get('p.group [id=gendermale]')
+            .check('Male', { force: true }).should('be.checked')
+
+        // Incluindo e validando nome da rua
+        cy.get('[id=streetaddress]').type('Rua Iririu')
+        cy.get('[id=streetaddress]').should('have.value', 'Rua Iririu')
+
+        // Selecionando e validando país
+        cy.get('[id=country]').select('Brazil')
+        cy.get('[id=country]').should('have.value', 'Brazil')
+
+        // Incluindo e validando cep
+        cy.get('[id=zipcode]').type('89222321')
+        cy.get('[id=zipcode]').should('have.value', '89222321')
+
+        // Incluindo e validando cidade
+        cy.get('[id=city]').type('joinville')
+        cy.get('[id=city]').should('have.value', 'joinville')
+
+        // Selecionando e validando ocupação
+        cy.get('[id=occupation]').select('Employee')
+        cy.get('[id=occupation]').should('have.value', 'Employee')
+
+        //Selecionando os hobbies e validando
+        //cy.get('p.group [id=speeding]').click()
+        //cy.get('p.group [id=other]').click()
+        cy.get('p.group [name=Hobbies]')
+            .check(['Speeding', 'Other'], { force: true}).should('be.checked')
+
+        // Clicando em next
+        cy.get('button#nextenterproductdata').click();
+        // Validando se foi para o próximo formulário
+        cy.get('li.idealsteps-step-active a').should('have.id', 'enterproductdata')
 
     });
 });
