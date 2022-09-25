@@ -5,8 +5,8 @@ class datePickerPage{
 
     }
 
-    getDatePickerInsurantData(){
-        return cy.get('button#opendateofbirthcalender')
+    getDatePickerProductData(){
+        return cy.get('button#openstartdatecalender')
 
     }
 

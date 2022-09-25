@@ -6,6 +6,10 @@ describe('tricentis', () => {
 
     var datePickerPage = new DatePickerPage();
 
+    Cypress.on('uncaught:exception', (err, runnable) => {
+        return false;
+    });
+
     it('aba Enter Vehicle Data', () => {
         cy.visit('http://sampleapp.tricentis.com/101/app.php')
 
@@ -32,9 +36,11 @@ describe('tricentis', () => {
         // Selecionando e validando dropdown
         cy.get('[id=numberofseats]').select(2)
         cy.get('[id=numberofseats]').should('have.value', 2)
+
         // Selecionando e validando checkbox
         cy.get('p.group [id=righthanddriveyes]')
             .check('Yes', { force: true }).should('be.checked')
+
         // Selecionando e validando dropdown
         cy.get('[id=numberofseatsmotorcycle]').select(2)
         cy.get('[id=numberofseatsmotorcycle]').should('have.value', 2)
@@ -100,8 +106,6 @@ describe('tricentis', () => {
         cy.get('[id=occupation]').should('have.value', 'Employee')
 
         //Selecionando os hobbies e validando
-        //cy.get('p.group [id=speeding]').click()
-        //cy.get('p.group [id=other]').click()
         cy.get('p.group [name=Hobbies]')
             .check(['Speeding', 'Other'], { force: true}).should('be.checked')
 
@@ -109,6 +113,95 @@ describe('tricentis', () => {
         cy.get('button#nextenterproductdata').click();
         // Validando se foi para o próximo formulário
         cy.get('li.idealsteps-step-active a').should('have.id', 'enterproductdata')
+
+    });
+
+    it('aba Enter Product Data', () => {
+
+        // Selecionando uma data
+        datePickerPage.getDatePickerProductData().click()
+        datePickerPage.getCalendar().should('be.visible')
+        cy.selectYear(2022)
+        cy.selectMonth('November')
+        cy.selectDay(24)
+
+        // Selecionando e validando valor
+        cy.get('[id=insurancesum]').select('3000000')
+        cy.get('[id=insurancesum]').should('have.value', '3000000')
+
+        // Selecionando e validando bonus
+        cy.get('[id=meritrating]').select('Super Bonus')
+        cy.get('[id=meritrating]').should('have.value', 'Super Bonus')
+
+        // Selecionando e validando damage insurance
+        cy.get('[id=damageinsurance]').select('Full Coverage')
+        cy.get('[id=damageinsurance]').should('have.value', 'Full Coverage')
+
+        //Selecionando e validando optional products
+        cy.get('section[style="display: block;"] > .idealforms-field-checkbox > .group')
+            .find('input#EuroProtection')
+            .check('Yes', { force: true}).should('be.checked')
+        cy.get('section[style="display: block;"] > .idealforms-field-checkbox > .group')
+            .find('input#LegalDefenseInsurance')
+            .check('Yes', { force: true}).should('be.checked')
+
+        // Selecionando e validando damage insurance
+        cy.get('[id=courtesycar]').select('Yes')
+        cy.get('[id=courtesycar]').should('have.value', 'Yes')
+
+        // Clicando em next
+        cy.get('button#nextselectpriceoption').click();
+        // Validando se foi para o próximo formulário
+        cy.get('li.idealsteps-step-active a').should('have.id', 'selectpriceoption')
+    });
+
+    it('aba Select Price Option', () => {
+
+        // Selecionando e validando checkbox
+        cy.get('tr > .group')
+            .find('input#selectultimate')
+            .check({ force: true }).should('be.checked')
+
+        // Clicando em next
+        cy.get('button#nextsendquote').click();
+        // Validando se foi para o próximo formulário
+        cy.get('li.idealsteps-step-active a').should('have.id', 'sendquote')
+    });
+
+    it('aba Send Quote', () => {
+
+        // Incluindo e validando um valor
+        cy.get('[id=email]').type('rafael@mail.com')
+        cy.get('[id=email]').should('have.value', 'rafael@mail.com')
+
+        // Incluindo e validando um valor
+        cy.get('[id=phone]').type('4799999999')
+        cy.get('[id=phone]').should('have.value', '4799999999')
+
+        // Incluindo e validando um valor
+        cy.get('[id=username]').type('rafaelsilva')
+        cy.get('[id=username]').should('have.value', 'rafaelsilva')
+
+        // Incluindo e validando um valor
+        cy.get('[id=password]').type('Password@123')
+        cy.get('[id=password]').should('have.value', 'Password@123')
+
+        // Incluindo e validando um valor
+        cy.get('[id=confirmpassword]').type('Password@123')
+        cy.get('[id=confirmpassword]').should('have.value', 'Password@123')
+
+        // Incluindo e validando um valor
+        cy.get('[id=Comments]').type('Sem comentários')
+        cy.get('[id=Comments]').should('have.value', 'Sem comentários')
+
+        // Clicando em send
+        cy.get('button#sendemail').click();
+        // Validando se apareceu a mensagem de sucesso
+        cy.get('body > div.sweet-alert.showSweetAlert.visible > div.sa-icon.sa-success.animate', { timeout: 10000})
+            .should('be.visible')
+
+        // Clicando em ok
+        cy.get('button.confirm').click();
 
     });
 });
