@@ -6,15 +6,13 @@ const el = require('./elements').ELEMENTS;
 
 class AbaInsurantData {
 
-    acessarForm(){
-        cy.visit('http://sampleapp.tricentis.com/101/app.php')
+    verificarAba(){
+        cy.get(el.step).should('have.id', 'enterinsurantdata')
     }
 
     preencherForm(){
 
         var datePickerPage = new DatePickerPage();
-
-
 
         // Incluindo e validando nome e sobrenome
         cy.get(el.firstName).type('Rafael')
@@ -54,13 +52,18 @@ class AbaInsurantData {
         cy.get(el.hobbies)
             .check(['Speeding', 'Other'], { force: true}).should('be.checked')
 
+    }
+
+    clickBotaoNext(){
         // Clicando em next
         cy.get(el.buttonNext).click();
+    }
+
+    verificarProxAba(){
         // Validando se foi para o próximo formulário
         cy.get(el.step).should('have.id', 'enterproductdata')
-
     }
 
 }
 
-export default new AbaInsurantData();
+module.exports = new AbaInsurantData();

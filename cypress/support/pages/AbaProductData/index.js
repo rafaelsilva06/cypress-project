@@ -6,8 +6,8 @@ const el = require('./elements').ELEMENTS;
 
 class AbaProdutData {
 
-    acessarForm(){
-        cy.visit('http://sampleapp.tricentis.com/101/app.php')
+    verificarAba(){
+        cy.get(el.step).should('have.id', 'enterproductdata')
     }
 
     preencherForm(){
@@ -45,14 +45,18 @@ class AbaProdutData {
         // Selecionando e validando damage insurance
         cy.get(el.courtesyCar).select('Yes')
         cy.get(el.courtesyCar).should('have.value', 'Yes')
+    }
 
+    clickBotaoNext(){
         // Clicando em next
         cy.get(el.buttonNext).click();
+    }
+
+    verificarProxAba(){
         // Validando se foi para o próximo formulário
         cy.get(el.step).should('have.id', 'selectpriceoption')
-
     }
 
 }
 
-export default new AbaProdutData();
+module.exports = new AbaProdutData();

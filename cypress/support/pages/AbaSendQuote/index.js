@@ -6,8 +6,8 @@ const el = require('./elements').ELEMENTS;
 
 class AbaSendQuote {
 
-    acessarForm(){
-        cy.visit('http://sampleapp.tricentis.com/101/app.php')
+    verificarAba(){
+        cy.get(el.step).should('have.id', 'sendquote')
     }
 
     preencherForm(){
@@ -37,18 +37,25 @@ class AbaSendQuote {
         // Incluindo e validando um valor
         cy.get(el.comments).type('Sem comentários')
         cy.get(el.comments).should('have.value', 'Sem comentários')
+    }
 
-        // Clicando em send
+    clickBotaoSend(){
+        // Clicando em next
         cy.get(el.buttonSend).click();
+    }
+
+    verificarMsgSuccess(){
         // Validando se apareceu a mensagem de sucesso
         cy.get(el.msgSuccess, { timeout: 10000})
             .should('be.visible')
+    }
 
+    clickBotaoOk(){
         // Clicando em ok
         cy.get(el.buttonConfirm).click();
-
     }
 
 }
 
-export default new AbaSendQuote();
+module.exports = new AbaSendQuote();
+

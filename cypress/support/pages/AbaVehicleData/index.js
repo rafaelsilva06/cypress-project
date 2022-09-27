@@ -10,6 +10,10 @@ class AbaVehicleData {
         cy.visit('http://sampleapp.tricentis.com/101/app.php')
     }
 
+    verificarAba(){
+        cy.get(el.step).should('have.id', 'entervehicledata')
+    }
+
     preencherForm(){
 
         var datePickerPage = new DatePickerPage();
@@ -63,12 +67,18 @@ class AbaVehicleData {
         // Incluindo e validando um valor
         cy.get(el.annualMileage).type('10000')
         cy.get(el.annualMileage).should('have.value', '10000')
+    }
+
+    clickBotaoNext(){
         // Clicando em next
         cy.get(el.buttonNext).click();
+    }
+
+    verificarProxAba(){
         // Validando se foi para o próximo formulário
         cy.get(el.step).should('have.id', 'enterinsurantdata')
     }
 
 }
 
-export default new AbaVehicleData();
+module.exports = new AbaVehicleData();

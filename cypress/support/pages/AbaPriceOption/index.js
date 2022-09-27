@@ -6,8 +6,8 @@ const el = require('./elements').ELEMENTS;
 
 class AbaPriceOption {
 
-    acessarForm(){
-        cy.visit('http://sampleapp.tricentis.com/101/app.php')
+    verificarAba(){
+        cy.get(el.step).should('have.id', 'selectpriceoption')
     }
 
     preencherForm(){
@@ -18,14 +18,18 @@ class AbaPriceOption {
         cy.get(el.selectOption)
             .find('input#selectultimate')
             .check({ force: true }).should('be.checked')
+    }
 
+    clickBotaoNext(){
         // Clicando em next
         cy.get(el.buttonNext).click();
+    }
+
+    verificarProxAba(){
         // Validando se foi para o próximo formulário
         cy.get(el.step).should('have.id', 'sendquote')
-
     }
 
 }
 
-export default new AbaPriceOption();
+module.exports = new AbaPriceOption();

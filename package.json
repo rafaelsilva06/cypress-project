@@ -4,12 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:runner": "cypress open",
+    "cypress:execution": "cypress run"
   },
-  "keywords": [],
+  "keywords": [
+    "cypress"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^10.8.0"
+    "@badeball/cypress-cucumber-preprocessor": "^13.0.2",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
+    "cypress": "^10.9.0",
+    "esbuild": "^0.15.9"
   }
 }
