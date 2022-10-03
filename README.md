@@ -2,7 +2,10 @@
 
 ## Requisitos
 Intellij
+
 Node Js
+
+Cypress
 
 ## Passo a passo para executar o projeto
 Baixar o zip do projeto e extraí-lo;
